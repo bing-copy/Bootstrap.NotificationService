@@ -9,6 +9,7 @@ This project provides a quick development solution about notification service wh
 ## Get Started
 
 1. Customize your own message senders by modifying files under `Models.Senders.Implementations`.
+1. Customize your own database by adding options to `AddDbContext` in `Startup.cs`.
 2. Publish and deploy.
 
 ## TODO
