@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bootstrap.Service.NotificationService.Models.Messages;
+﻿using Bootstrap.Service.NotificationService.Models.Messages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bootstrap.Service.NotificationService.Models
+namespace Bootstrap.Service.NotificationService.Business
 {
     public abstract class NotificationDbContext : DbContext
     {

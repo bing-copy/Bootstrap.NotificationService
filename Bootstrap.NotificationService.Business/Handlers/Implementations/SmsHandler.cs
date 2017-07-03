@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Bootstrap.Components.Models.ResponseModels;
+using Bootstrap.Service.NotificationService.Business.Senders;
 using Bootstrap.Service.NotificationService.Models.Messages;
 using Bootstrap.Service.NotificationService.Models.RequestModels;
-using Bootstrap.Service.NotificationService.Models.ResponseModels;
-using Bootstrap.Service.NotificationService.Models.Senders;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bootstrap.Service.NotificationService.Models.Handlers.Implementations
+namespace Bootstrap.Service.NotificationService.Business.Handlers.Implementations
 {
     public abstract class SmsHandler : MessageHandler<SmsMessage>, ISmsHandler
     {

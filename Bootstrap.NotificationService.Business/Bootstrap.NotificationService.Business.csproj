@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>Bootstrap.Service.NotificationService.Business</AssemblyName>
+    <RootNamespace>Bootstrap.Service.NotificationService.Business</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bootstrap.Components\Bootstrap.Components\Bootstrap.Components.csproj" />
+    <ProjectReference Include="..\Bootstrap.NotificationService.Models\Bootstrap.NotificationService.Models.csproj" />
+  </ItemGroup>
+
+</Project>

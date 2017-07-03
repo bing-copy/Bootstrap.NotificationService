@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Bootstrap.Service.NotificationService.Models.Senders.Implementations.WeChatMessageSender
+namespace Bootstrap.Service.NotificationService.Business.Senders.Implementations.WeChatMessageSender
 {
     public class WeChatAccessTokenProvider : IWeChatAccessTokenProvider
     {

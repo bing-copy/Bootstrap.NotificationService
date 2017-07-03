@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bootstrap.Service.NotificationService.Models;
-using Bootstrap.Service.NotificationService.Models.Handlers;
-using Bootstrap.Service.NotificationService.Models.Handlers.Implementations;
-using Bootstrap.Service.NotificationService.Models.Senders;
-using Bootstrap.Service.NotificationService.Models.Senders.Implementations;
-using Bootstrap.Service.NotificationService.Models.Senders.Implementations.WeChatMessageSender;
+using Bootstrap.Components.Filters;
+using Bootstrap.Components.Middlewares;
+using Bootstrap.Service.NotificationService.Business;
+using Bootstrap.Service.NotificationService.Business.Handlers;
+using Bootstrap.Service.NotificationService.Business.Handlers.Implementations;
+using Bootstrap.Service.NotificationService.Business.Senders;
+using Bootstrap.Service.NotificationService.Business.Senders.Implementations;
+using Bootstrap.Service.NotificationService.Business.Senders.Implementations.WeChatMessageSender;
+using Bootstrap.Service.NotificationService.Models.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -34,9 +39,20 @@ namespace Bootstrap.Service.NotificationService
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(t => t.Filters.Add(typeof(SimpleInvalidDataFilter)));
 
-            services.AddDbContext<NotificationDbContext>();
+            var options = Configuration.GetSection(nameof(NotificationServiceOptions))
+                .Get<NotificationServiceOptions>();
+
+            services.AddDbContext<NotificationDbContext>(t =>
+            {
+                Action<MySqlDbContextOptionsBuilder> action = null;
+                if (!string.IsNullOrEmpty(options.MigrationsAssembly))
+                {
+                    action = b => b.MigrationsAssembly(options.MigrationsAssembly);
+                }
+                t.UseMySql(options.DbConnectionString, action);
+            });
 
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IEmailHandler, EmailHandler>();
@@ -51,6 +67,8 @@ namespace Bootstrap.Service.NotificationService
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseSimpleExceptionHandler();
 
             app.UseMvcWithDefaultRoute();
         }
